@@ -6,7 +6,7 @@
 - Run "npm run dev" command for compile vue.js components and files
 - Run "cp .env.example .env" command
 - Run "php artisan key:generate" command
- -Run "php artisan db:seed" command
+-Run "php artisan db:seed" command
 
 ------------
 ### Configuration
