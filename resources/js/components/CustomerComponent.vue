@@ -9,6 +9,7 @@
         <br/>
 
         <!--code-->
+         <input type="text" class="form-control mb-1" v-on:keyup="filteredResources()" placeholder="Filter" v-model="searchQuery" />
         <table class="table table-striped table-bordered table-hover no-footer">
             <thead>
             <tr class="text-center">
@@ -32,14 +33,10 @@
                          {{ itemtelethone.telephone}}
                          </div> 
                      </td>
-                      <td class="text-center">
-                     <div v-for="item in post.address" :key="item.id">
-                         {{ item.adressname}}
-                         </div> 
-                     </td>
-                <td><router-link :to="{name: 'editcustomer', params: { id: post.id }}" class="btn btn-primary">Edit
+                      <td class="text-center">{{ post.address }}</td>
+                      <td><router-link :to="{name: 'editcustomer', params: { id: post.id }}" class="btn btn-primary">Edit
                     </router-link></td>
-                <td>delete</td>
+                <td><button class="btn btn-danger" @click="deletePost(post.id)">Delete</button></td>
                 </tr>
             </tbody>
         </table>        
@@ -51,7 +48,19 @@
 export default {
      data() {
             return {
+                searchQuery:'',
                 customerdata: []
+            }
+        },
+         computed: {
+            filteredResources (){
+            if(this.searchQuery){
+            return this.customerdata.filter((item)=>{
+                return item.title.startsWith(this.searchQuery);
+            })
+            }else{
+                return this.customerdata;
+            }
             }
         },
         created() {
@@ -60,6 +69,20 @@ export default {
                 this.customerdata = response.data.data;
             });
         },
+        methods: {
+            deletePost(id) {
+                event.preventDefault();
+                       let uri = `http://127.0.0.1:8000/api/Customers/${id}`;
+                        this.axios.delete(uri)
+                            .then(response => {
+                                let i = this.customerdata.map(item => item.id).indexOf(id); // find index of your object
+                                console.log(i);
+                                this.customerdata.splice(i, 1)
+                            });
+                    }
+                
+            
+        }
          
 };
 </script>

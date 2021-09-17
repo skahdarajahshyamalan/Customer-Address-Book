@@ -9,7 +9,7 @@ class Customer extends Model
 {
     //
     protected $fillable = [
-		'name','nic',
+		'name','nic','address'
 	];
 
   public function Contact(){

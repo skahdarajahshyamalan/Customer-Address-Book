@@ -20,7 +20,7 @@ class CustomerResource extends JsonResource
              'nic' => $this->nic,
              'id' =>$this->id,
              'phonenumber' =>$this->Contact,
-             'address'  => $this->Adres
+             'address'  => $this->address
         ];
     }
 }

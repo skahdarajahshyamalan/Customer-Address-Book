@@ -7,26 +7,26 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                     <input type="text" class="form-control" v-model="post.name" id="text" >
+                     <input type="text" class="form-control" required v-model="post.name" id="text" >
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Nic</label>
                     <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="post.nic" id="text" >
+                    <input type="text" class="form-control" required v-model="post.nic" id="text" >
                     </div>
                 </div>
                  <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="post.address" id="text" >
+                    <input type="text" class="form-control" required v-model="post.address" id="text" >
                     </div>
                 </div>
                 <div class="form-group row"  v-for="(input, index) in phoneNumbers" :key="`phoneInput-${index}`">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Telephone</label>
                     <div class="col-sm-10">
                         <div class="row">
-                            <div class="col-sm-8"><input type="text" v-model="input.phone"  class="form-control" id="text" ></div>
+                            <div class="col-sm-8"><input type="number" v-model="input.phone"  required class="form-control" id="text" ></div>
                             <div class="col-sm-2">
                                  <div class="row">
                                      <div class="col-sm-6"> 
@@ -72,8 +72,9 @@
                  <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
+                         <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="submit" class="btn btn-primary">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                       
                     </div>
                 </div>
             </form>
@@ -100,11 +101,25 @@ export default {
     removeField(index, fieldType) {
         fieldType.splice(index, 1);
        },
-        addPost() {
-            console.log(this.post);
-             console.log(this.phoneNumbers);
-             event.preventDefault();
-        }
+         addPost() {
+                // console.log(this.post);
+                let uri = 'http://127.0.0.1:8000/api/Customers';
+                this.axios.post(uri, {'formdata':this.post,'phonenumber':this.phoneNumbers}).then((response) => {
+
+                    event.preventDefault();
+                    this.$router.push({name: 'customer'});
+                       }).then((result) => {
+                        if (result.value) {
+                            // alert('added');
+                            this.$router.push({name: 'customer'});
+                        }
+                    })
+
+                .catch((error) => {
+                   // this.allerros = error.response.data.errors;
+                    //this.success = false;
+                });
+            },
   },
 };
 </script>

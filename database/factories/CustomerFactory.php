@@ -9,6 +9,7 @@ $factory->define(Customer::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
          'nic' => $faker->numerify('#########V'),
+          'address'=>$faker->address
         //
     ];
 });

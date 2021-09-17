@@ -17,7 +17,7 @@ class CreateContactsTable extends Migration
             $table->bigIncrements('id');
            $table->integer('customer_id')->unsigned()->index();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->integer('telephone');
+            $table->bigInteger('telephone');
             $table->timestamps();
         });
     }

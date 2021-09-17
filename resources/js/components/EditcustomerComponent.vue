@@ -19,16 +19,14 @@
                  <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
-                         <div v-for="item in post.address" :key="item.id">
-                           <input type="text" class="form-control" v-model="item.adressname"  id="text" >
-                         </div>
+                        <input type="text" class="form-control" required v-model="post.address" id="text" > 
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">telephone</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-10" v-if="post.phonenumber">
                          <div v-for="item in post.phonenumber" :key="item.id">
-                           <input type="text" class="form-control" v-model="item.telephone"  id="text" >
+                           <input type="number" class="form-control" v-model="item.telephone"  id="text" >
                          </div>
                     </div>
                 </div>
@@ -63,9 +61,21 @@ export default {
         },
          methods: {
             updatePost() {
-                console.log(
-                    this.post
-                );
+                let uri = `http://127.0.0.1:8000/api/Customers/${this.$route.params.id}`;
+                this.axios.put(uri, this.post).then((response) => {
+                    event.preventDefault();
+                   this.$router.push({name: 'customer'});
+                    }).then((result) => {
+                        if (result.value) {
+                            // alert('edited');
+                            this.$router.push({name: 'posts'});
+                        }
+                    })
+                .catch((error) => {
+                    this.allerros = error.response.data.errors;
+                    this.success = false;
+                });
+            
             }
          }
 

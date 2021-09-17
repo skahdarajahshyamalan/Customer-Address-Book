@@ -6,7 +6,7 @@
             <div class="card card-default">
                 <div class="card-header">Hello World!</div>
                 <div class="card-body">
-					<p class="">Simple Crud with Laravel and Vue.js</p>
+					<p class=""> Laravel and Vue.js</p>
                 </div>
             </div>
         </div>
